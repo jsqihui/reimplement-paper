@@ -1,1 +1,11 @@
-Re-implement the paper: FaceNet: A Unified Embedding for Face Recognition and Clustering
+Re-implement the paper: 
+
+FaceNet: A Unified Embedding for Face Recognition and Clustering
+https://arxiv.org/pdf/1503.03832.pdf
+
+Several Steps to Reimplement the paper(welcome to edit):
+
+1. read and understand the paper
+2. collect and prepare the data
+3. implement the model
+4. train and tune the model to achieve the benchmark
