@@ -1,7 +1,8 @@
 """download mscelebrities dataset"""
 import os
-
+import utils
 import requests
+import urllib
 from tqdm import tqdm
 
 
@@ -24,11 +25,7 @@ def download_imdb(face_only=True, data_dir="./data"):
     if face_only:
         if os.path.isfile(imdb_face):
             raise Exception("file %s exists" % imdb_face) 
-        response = requests.get(face_url, stream=True)
-        total_size = int(response.headers.get('content-length', 0));
-        with open(imdb_face, "wb") as handler:
-            for data in tqdm(response.iter_content(), total=total_size, unit='B', unit_scale=True):
-                handler.write(data)
+        utils.download_file(face_url, imdb_face)
     else:
         # TODO download all imdb data
         pass
@@ -39,32 +36,24 @@ def download_wiki(data_dir="./data"):
     face_url = "https://data.vision.ee.ethz.ch/cvl/rrothe/imdb-wiki/static/wiki_crop.tar" 
     face_meta_url = "https://data.vision.ee.ethz.ch/cvl/rrothe/imdb-wiki/static/wiki.tar.gz"
 
-    wiki_face = os.path.join(data_dir, "wiki_face.tar.gz")
+    wiki_face = os.path.join(data_dir, "wiki_face.tar")
     wiki_meta = os.path.join(data_dir, "wiki_meta.tar.gz")
 
     # download faces
     if os.path.isfile(wiki_face):
         raise Exception("file %s exists" % wiki_face) 
     else:
-        response = requests.get(face_url, stream=True)
-        total_size = int(response.headers.get('content-length', 0));
-        with open(wiki_face, "wb") as handler:
-            for data in tqdm(response.iter_content(), total=total_size, unit='B', unit_scale=True):
-                handler.write(data)
+        utils.download_file(face_url, wiki_face)
 
     if os.path.isfile(wiki_meta):
         raise Exception("file %s exists" % wiki_meta) 
     else:
-        response = requests.get(face_meta_url, stream=True)
-        total_size = int(response.headers.get('content-length', 0));
-        with open(wiki_meta, "wb") as handler:
-            for data in tqdm(response.iter_content(), total=total_size, unit='B', unit_scale=True):
-                handler.write(data)
+        utils.download_file(face_meta_url, wiki_meta)
 
         
 def main():
-    download_imdb() 
-    download_wiki() 
+    # download_imdb()
+    download_wiki()
 
 if __name__ == "__main__":
     main()
